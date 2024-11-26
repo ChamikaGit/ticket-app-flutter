@@ -3,6 +3,26 @@ import 'package:ticket_app/base/bottom_nav_bar.dart';
 
 void main() {
   runApp(const MyAppTest());
+  var test = TestClass(x: 3, y: 4);
+  print(test.y);
+
+  var testNew = test.copWith(x:20); // without adding y we can get the before defined y value
+  print(testNew.x);
+  print(testNew.y);
+}
+
+//added this testClass for test the copywith function and sample constructor work demonstration
+
+class TestClass{
+  int x;
+  int y;
+
+  TestClass({required this.x, required this.y});
+
+  TestClass copWith({int? x,int? y}){ //nullable prams need to add { } too - optional
+    return TestClass(x:x??this.x, y: y??this.y);
+    return TestClass(x:x!, y: y!);
+  }
 }
 
 //sample test learning MyAppTest widget
