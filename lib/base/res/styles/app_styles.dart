@@ -9,6 +9,7 @@ class AppStyles {
 
   static Color ticketOrange = const Color(0xfff37b67);
   static Color ticketBlue = const Color(0xFF526799);
+  static Color kakiColor = const Color(0xFFd2bdb6);
 
   static TextStyle textStyle =
   TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: textColor);//default textstyle

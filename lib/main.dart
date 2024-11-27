@@ -1,27 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:ticket_app/base/bottom_nav_bar.dart';
+import 'package:ticket_app/routes/app_routes.dart';
+import 'package:ticket_app/screens/view_all_tickets.dart';
 
 void main() {
   runApp(const MyAppTest());
   var test = TestClass(x: 3, y: 4);
   print(test.y);
 
-  var testNew = test.copWith(x:20); // without adding y we can get the before defined y value
+  var testNew = test.copWith(
+      x: 20); // without adding y we can get the before defined y value
   print(testNew.x);
   print(testNew.y);
 }
 
 //added this testClass for test the copywith function and sample constructor work demonstration
 
-class TestClass{
+class TestClass {
   int x;
   int y;
 
   TestClass({required this.x, required this.y});
 
-  TestClass copWith({int? x,int? y}){ //nullable prams need to add { } too - optional
-    return TestClass(x:x??this.x, y: y??this.y);
-    return TestClass(x:x!, y: y!);
+  TestClass copWith({int? x, int? y}) {
+    //nullable prams need to add { } too - optional
+    return TestClass(x: x ?? this.x, y: y ?? this.y);
+    return TestClass(x: x!, y: y!);
   }
 }
 
@@ -31,9 +35,18 @@ class MyAppTest extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: BottomNavBar()
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      // home: const BottomNavBar(),
+      routes: {
+        AppRoutes.home:(context){ // here "/" means home so if we use "/" don't need to mentioned the home in material app
+          return const BottomNavBar();
+        },
+        AppRoutes.allTickets: (context) {
+          //we can precache the data here before load the screen
+          return const ViewAllTickets();
+        },
+      },
     );
   }
 }
