@@ -14,6 +14,7 @@ class AppStyles {
   static Color iconColor = const Color(0xFFBFC2DF);
   static Color blueButtonColor = const Color(0xD91130CE);
   static Color circleColor = const Color(0xFF189999);
+  static Color ticketColor = const Color(0xFFFFFFFF);
 
   static TextStyle textStyle =
   TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: textColor);//default textstyle
@@ -29,5 +30,5 @@ class AppStyles {
       TextStyle(fontSize: 17, fontWeight: FontWeight.w500, color: textColor);
 
   static TextStyle headLineStyle4 =
-  TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: textColor);
+  TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: Colors.grey.shade500);
 }
