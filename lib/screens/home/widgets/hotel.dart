@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ticket_app/base/res/styles/app_styles.dart';
 
-import '../../base/res/media.dart';
-
 class Hotel extends StatelessWidget {
   const Hotel({super.key, required this.hotel});
 
@@ -28,8 +26,8 @@ class Hotel extends StatelessWidget {
             decoration: BoxDecoration(
                 color: AppStyles.ticketBlue,
                 borderRadius: BorderRadius.circular(12),
-                image: const DecorationImage(
-                    fit: BoxFit.cover, image: AssetImage(AppMedia.hotelRoom))),
+                image: DecorationImage(
+                    fit: BoxFit.cover, image: AssetImage("assets/images/${hotel["image"]}"))),
           ),
           const SizedBox(height: 15),
           Padding(

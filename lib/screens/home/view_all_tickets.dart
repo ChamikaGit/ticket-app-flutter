@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ticket_app/base/utils/app_json.dart';
 import 'package:ticket_app/base/widgets/ticket_view.dart';
 
-import '../base/res/styles/app_styles.dart';
+import '../../base/res/styles/app_styles.dart';
 
 class ViewAllTickets extends StatelessWidget {
   const ViewAllTickets({super.key});
