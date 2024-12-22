@@ -12,26 +12,47 @@ import '../../base/widgets/text_style_fourth.dart';
 import '../../base/widgets/text_style_third.dart';
 import '../search/widget/app_ticket_tabs.dart';
 
-class TicketScreen extends StatelessWidget {
+class TicketScreen extends StatefulWidget {
   const TicketScreen({super.key});
+
+  @override
+  State<TicketScreen> createState() => _TicketScreenState();
+}
+
+class _TicketScreenState extends State<TicketScreen> {
+
+  late int ticketIndex = 0;
+
+  //need to get the data from other screen and grab it in here inside the stateful widget
+  @override
+  void didChangeDependencies() {
+    var args = ModalRoute.of(context)!.settings.arguments as Map;
+    print("passed index : ${args["index"]}");
+    ticketIndex = args["index"];
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppStyles.bgColor,
+      appBar: AppBar(
+        title: const Text("Tickets"),
+        backgroundColor: AppStyles.bgColor,
+      ),
       body: Stack(children: [
         ListView(
           padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
           children: [
-            const SizedBox(height: 20),
-            Text("Tickets", style: AppStyles.headLineStyle1),
-            const SizedBox(height: 30),
+            // const SizedBox(height: 20),
+            // Text("Tickets", style: AppStyles.headLineStyle1),
+            // const SizedBox(height: 30),
             const AppTicketTabs(firstTab: "Upcoming", secondTab: "Previous"),
             const SizedBox(height: 20),
             Container(
                 padding: const EdgeInsets.only(left: 16),
                 child: TicketView(
-                  ticket: ticketList[0],
+                  ticket: ticketList[ticketIndex],
                   isColor: true,
                 )),
             const SizedBox(height: 1),
@@ -162,7 +183,7 @@ class TicketScreen extends StatelessWidget {
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 16),
               child: TicketView(
-                ticket: ticketList[0],
+                ticket: ticketList[ticketIndex],
                 wholeScreen: true,
               ),
             )

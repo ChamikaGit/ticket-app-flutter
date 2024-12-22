@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ticket_app/base/bottom_nav_bar.dart';
 import 'package:ticket_app/routes/app_routes.dart';
 import 'package:ticket_app/screens/home/view_all_tickets.dart';
+import 'package:ticket_app/screens/ticket/ticket_screen.dart';
 
 void main() {
   runApp(const MyAppTest());
@@ -46,6 +47,7 @@ class MyAppTest extends StatelessWidget {
           //we can precache the data here before load the screen
           return const ViewAllTickets();
         },
+        AppRoutes.ticketScreen :(context) => const TicketScreen()
       },
     );
   }
