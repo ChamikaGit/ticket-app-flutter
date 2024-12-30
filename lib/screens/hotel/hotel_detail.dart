@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ticket_app/base/res/styles/app_styles.dart';
 
-import '../base/utils/app_json.dart';
+import '../../base/utils/app_json.dart';
 
 class HotelDetail extends StatefulWidget {
   const HotelDetail({super.key});
@@ -67,18 +67,20 @@ class _HotelDetailState extends State<HotelDetail> {
                     bottom: 20,
                     right: 20,
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8,vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 4),
                       color: Colors.black.withOpacity(0.3),
                       child: Text(
                         hotelList[hotelIndex]["place"],
-                        style: TextStyle(fontSize: 24,color: Colors.white,
-                        shadows: [
-                          Shadow(
-                            blurRadius: 10.0,
-                            color: AppStyles.primaryColor,
-                            offset: const Offset(2.0, 2.0)
-                          )
-                        ]),
+                        style: const TextStyle(
+                            fontSize: 24,
+                            color: Colors.white,
+                            shadows: [
+                              Shadow(
+                                  blurRadius: 10.0,
+                                  color: Colors.red,
+                                  offset: Offset(2.0, 2.0))
+                            ]),
                       ),
                     ))
               ],
@@ -86,10 +88,15 @@ class _HotelDetailState extends State<HotelDetail> {
           ),
           SliverList(
               delegate: SliverChildListDelegate([
-            const Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Text(
-                  "If your Baseus Bowie H1 headphones are experiencing rapid battery drain, it could be due to several factors including: active noise cancellation being turned on, high volume usage, Bluetooth connection issues, outdated firmware, improper charging habits, or potential battery degradation from age; try turning off ANC, lowering volume, checking your Bluetooth connection, updating firmware if available, ensuring proper charging practices, and considering a potential battery replacement if the issue persists."),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: ExpandedTextWidget(
+                text:hotelList[hotelIndex]['detail'],
+              )
+              /*Text(
+                  "If your Baseus Bowie H1 headphones are experiencing rapid battery drain, it could be due to several factors including: active noise cancellation being turned on, high volume usage, Bluetooth connection issues, outdated firmware, improper charging habits, or potential battery degradation from age; try turning off ANC, lowering volume, checking your Bluetooth connection, updating firmware if available, ensuring proper charging practices, and considering a potential battery replacement if the issue persists."
+              )*/
+              ,
             ),
             const Padding(
               padding: EdgeInsets.all(16.0),
@@ -102,17 +109,64 @@ class _HotelDetailState extends State<HotelDetail> {
               height: 200,
               child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
+                  itemCount: hotelList[hotelIndex]["images"].length,
+                  itemBuilder: (context, imageIndex) {
+
                     return Container(
-                        margin: EdgeInsets.all(8),
-                        child: Image.network(
-                            "https://via.placeholder.com/200x200"));
+                      color: Colors.red,
+                        margin: const EdgeInsets.all(8),
+                        child: Image.asset("assets/images/${hotelList[hotelIndex]["images"][imageIndex]}"));
                   }),
-            )
+            ),
+                const SizedBox(height: 40)
           ]))
         ],
       ),
+    );
+  }
+}
+
+class ExpandedTextWidget extends StatefulWidget {
+  const ExpandedTextWidget({super.key, required this.text});
+
+  final String text;
+
+  @override
+  State<ExpandedTextWidget> createState() => _ExpandedTextWidgetState();
+}
+
+class _ExpandedTextWidgetState extends State<ExpandedTextWidget> {
+  bool isExpanded = false;
+
+  _toggeleExpantion() {
+    setState(() {
+      isExpanded = !isExpanded;
+    });
+    print("Value is isExpanded :${isExpanded}");
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var textWidget = Text(
+      widget.text,
+      maxLines: isExpanded == true ? null : 9,
+      overflow:
+          isExpanded == true ? TextOverflow.visible : TextOverflow.ellipsis,
+    );
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        textWidget,
+        GestureDetector(
+          onTap: () {
+            _toggeleExpantion();
+          },
+          child: Text(isExpanded == true ? "Less" : "More",
+              style:
+                  AppStyles.textStyle.copyWith(color: AppStyles.primaryColor)),
+        )
+      ],
     );
   }
 }

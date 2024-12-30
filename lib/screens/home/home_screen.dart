@@ -77,8 +77,29 @@ class HomeScreen extends StatelessWidget {
                   SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Row(
-                        children: ticketList.take(2).map((singleTicket) {
-                          return TicketView(ticket: singleTicket);
+                        children: ticketList
+                            .take(3)
+                            .toList()
+                            .asMap()
+                            .entries
+                            .map((entry) {
+                          //To get the index we can use this way as well
+                          // final indexMethod = ticketList.indexOf(singleTicket);
+
+                          final index = entry.key;
+                          final singleTicket = entry.value;
+
+                          return GestureDetector(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  AppRoutes.ticketScreen,
+                                  arguments: {
+                                    "index": index
+                                  }, // Pass the clicked index
+                                );
+                              },
+                              child: TicketView(ticket: singleTicket));
                         }).toList(),
                       )),
                   const SizedBox(height: 20),
@@ -92,23 +113,26 @@ class HomeScreen extends StatelessWidget {
                       // );
                       // Navigator.pushNamed(context, AppRoutes.allTickets);
 
-                      Navigator.pushNamed(
-                          context, AppRoutes.allHotels,
+                      Navigator.pushNamed(context, AppRoutes.allHotels,
                           arguments: {"index": 0});
-
                     },
                   ),
                   const SizedBox(height: 20),
                   SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      // child: Row(
-                      //     children: hotelList.take(3).map((singleHotel) {
-                      //       return Hotel(hotel: singleHotel);
-                      //     }).toList()
-                      // )
+                    scrollDirection: Axis.horizontal,
+                    // child: Row(
+                    //     children: hotelList.take(3).map((singleHotel) {
+                    //       return Hotel(hotel: singleHotel);
+                    //     }).toList()
+                    // )
                     //changed the below code instead of above code
                     child: Row(
-                      children: hotelList.take(3).toList().asMap().entries.map((entry) {
+                      children: hotelList
+                          .take(3)
+                          .toList()
+                          .asMap()
+                          .entries
+                          .map((entry) {
                         final index = entry.key;
                         final singleHotel = entry.value;
 
@@ -117,14 +141,15 @@ class HomeScreen extends StatelessWidget {
                             Navigator.pushNamed(
                               context,
                               AppRoutes.hotelDetail,
-                              arguments: {"index": index}, // Pass the clicked index
+                              arguments: {
+                                "index": index
+                              }, // Pass the clicked index
                             );
                           },
                           child: Hotel(hotel: singleHotel),
                         );
                       }).toList(),
                     ),
-
                   ),
                   const SizedBox(height: 20)
                 ],
