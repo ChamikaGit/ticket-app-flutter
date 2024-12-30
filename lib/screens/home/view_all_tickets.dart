@@ -31,6 +31,7 @@ class ViewAllTickets extends StatelessWidget {
                               Navigator.pushNamed(
                                   context, AppRoutes.ticketScreen,
                                   arguments: {"index": index});
+                              //passed arguments as a map {} like this
                             },
                             child: Container(
                                 margin: const EdgeInsets.only(bottom: 10),

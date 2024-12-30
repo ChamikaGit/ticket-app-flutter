@@ -90,17 +90,42 @@ class HomeScreen extends StatelessWidget {
                       //   context,
                       //   MaterialPageRoute(builder: (context) => const ViewAllTickets()),
                       // );
-                      Navigator.pushNamed(context, AppRoutes.allTickets);
+                      // Navigator.pushNamed(context, AppRoutes.allTickets);
+
+                      Navigator.pushNamed(
+                          context, AppRoutes.allHotels,
+                          arguments: {"index": 0});
+
                     },
                   ),
                   const SizedBox(height: 20),
                   SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
-                      child: Row(
-                          children: hotelList.take(3).map((singleHotel) {
-                            return Hotel(hotel: singleHotel);
-                          }).toList()
-                      )),
+                      // child: Row(
+                      //     children: hotelList.take(3).map((singleHotel) {
+                      //       return Hotel(hotel: singleHotel);
+                      //     }).toList()
+                      // )
+                    //changed the below code instead of above code
+                    child: Row(
+                      children: hotelList.take(3).toList().asMap().entries.map((entry) {
+                        final index = entry.key;
+                        final singleHotel = entry.value;
+
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(
+                              context,
+                              AppRoutes.hotelDetail,
+                              arguments: {"index": index}, // Pass the clicked index
+                            );
+                          },
+                          child: Hotel(hotel: singleHotel),
+                        );
+                      }).toList(),
+                    ),
+
+                  ),
                   const SizedBox(height: 20)
                 ],
               ),

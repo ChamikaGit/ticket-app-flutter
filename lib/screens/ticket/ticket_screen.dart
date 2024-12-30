@@ -26,10 +26,15 @@ class _TicketScreenState extends State<TicketScreen> {
   //need to get the data from other screen and grab it in here inside the stateful widget
   @override
   void didChangeDependencies() {
-    var args = ModalRoute.of(context)!.settings.arguments as Map;
-    print("passed index : ${args["index"]}");
-    ticketIndex = args["index"];
+    //in first time this argument is null so need to add this null check to this
+
+    if(ModalRoute.of(context)!.settings.arguments!= null) {
+      var args = ModalRoute.of(context)!.settings.arguments as Map;
+      print("passed index : ${args["index"]}");
+      ticketIndex = args["index"];
+    }
     super.didChangeDependencies();
+
   }
 
   @override
