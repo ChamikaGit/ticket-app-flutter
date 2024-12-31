@@ -52,7 +52,6 @@ class MyAppTest extends StatelessWidget {
         AppRoutes.ticketScreen :(context) => const TicketScreen(),
         AppRoutes.allHotels :(context) => const AllHotelsScreen(),
         AppRoutes.hotelDetail :(context) => const HotelDetail(),
-        AppRoutes.hotelDetail :(context) => const HotelDetail(),
       },
     );
   }

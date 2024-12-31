@@ -15,6 +15,7 @@ class AppStyles {
   static Color blueButtonColor = const Color(0xD91130CE);
   static Color circleColor = const Color(0xFF189999);
   static Color ticketColor = const Color(0xFFFFFFFF);
+  static Color profilePremiumBadgeColor = const Color(0xFFFEF4F3);
 
   static TextStyle textStyle =
   TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: textColor);//default textstyle
