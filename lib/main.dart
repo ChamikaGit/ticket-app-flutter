@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:ticket_app/base/bottom_nav_bar.dart';
 import 'package:ticket_app/routes/app_routes.dart';
 import 'package:ticket_app/screens/home/view_all_hotels.dart';
@@ -38,12 +39,12 @@ class MyAppTest extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       // home: const BottomNavBar(),
       routes: {
         AppRoutes.home:(context){ // here "/" means home so if we use "/" don't need to mentioned the home in material app
-          return const BottomNavBar();
+          return  BottomNavBar();
         },
         AppRoutes.allTickets: (context) {
           //we can precache the data here before load the screen
