@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ticket_app/base/res/styles/app_styles.dart';
 import 'package:ticket_app/controller/text_expantion_controller.dart';
 import '../../base/utils/app_json.dart';
 import 'package:get/get.dart';
+
+import '../../provider/text_expanstion_provider.dart';
 
 
 class HotelDetail extends StatefulWidget {
@@ -128,39 +131,38 @@ class _HotelDetailState extends State<HotelDetail> {
   }
 }
 
-class ExpandedTextWidget extends StatelessWidget {
+class ExpandedTextWidget extends ConsumerWidget {
    ExpandedTextWidget({super.key, required this.text});
 
   final String text;
-  /** used getX here **/
-  TextExpansionController controller = Get.put(TextExpansionController());
+
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context,WidgetRef ref) {
 
-    return Obx((){
+    var isExpanded = ref.watch(textExpanstionNotifierProvider);
 
-      var textWidget = Text(
-        text,
-        maxLines: controller.isExpanded.value == true ? null : 9,
-        overflow:
-        controller.isExpanded.value == true ? TextOverflow.visible : TextOverflow.ellipsis,
-      );
+    var textWidget = Text(
+      text,
+      maxLines: isExpanded == true ? null : 9,
+      overflow:
+      isExpanded == true ? TextOverflow.visible : TextOverflow.ellipsis,
+    );
 
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          textWidget,
-          GestureDetector(
-            onTap: () {
-              controller.toggeleExpantion();
-            },
-            child: Text(controller.isExpanded.value == true ? "Less" : "More",
-                style:
-                AppStyles.textStyle.copyWith(color: AppStyles.primaryColor)),
-          )
-        ],
-      );
-    });
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        textWidget,
+        GestureDetector(
+          onTap: () {
+            ref.watch(textExpanstionNotifierProvider.notifier).toggeleExpantion(isExpanded);
+          },
+          child: Text(isExpanded == true ? "Less" : "More",
+              style:
+              AppStyles.textStyle.copyWith(color: AppStyles.primaryColor)),
+        )
+      ],
+    );
+
   }
 }

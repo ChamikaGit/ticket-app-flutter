@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:ticket_app/base/bottom_nav_bar.dart';
 import 'package:ticket_app/routes/app_routes.dart';
@@ -8,7 +9,9 @@ import 'package:ticket_app/screens/hotel/hotel_detail.dart';
 import 'package:ticket_app/screens/ticket/ticket_screen.dart';
 
 void main() {
-  runApp(const MyAppTest());
+  runApp(
+      ProviderScope(child : const MyAppTest())
+  );
   var test = TestClass(x: 3, y: 4);
   print(test.y);
 
@@ -39,7 +42,7 @@ class MyAppTest extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       // home: const BottomNavBar(),
       routes: {
