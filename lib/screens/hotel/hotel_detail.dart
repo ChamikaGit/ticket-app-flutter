@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:ticket_app/base/res/styles/app_styles.dart';
-
+import 'package:ticket_app/controller/text_expantion_controller.dart';
 import '../../base/utils/app_json.dart';
+import 'package:get/get.dart';
+
 
 class HotelDetail extends StatefulWidget {
   const HotelDetail({super.key});
@@ -126,47 +128,39 @@ class _HotelDetailState extends State<HotelDetail> {
   }
 }
 
-class ExpandedTextWidget extends StatefulWidget {
-  const ExpandedTextWidget({super.key, required this.text});
+class ExpandedTextWidget extends StatelessWidget {
+   ExpandedTextWidget({super.key, required this.text});
 
   final String text;
-
-  @override
-  State<ExpandedTextWidget> createState() => _ExpandedTextWidgetState();
-}
-
-class _ExpandedTextWidgetState extends State<ExpandedTextWidget> {
-  bool isExpanded = false;
-
-  _toggeleExpantion() {
-    setState(() {
-      isExpanded = !isExpanded;
-    });
-    print("Value is isExpanded :${isExpanded}");
-  }
+  /** used getX here **/
+  TextExpansionController controller = Get.put(TextExpansionController());
 
   @override
   Widget build(BuildContext context) {
-    var textWidget = Text(
-      widget.text,
-      maxLines: isExpanded == true ? null : 9,
-      overflow:
-          isExpanded == true ? TextOverflow.visible : TextOverflow.ellipsis,
-    );
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        textWidget,
-        GestureDetector(
-          onTap: () {
-            _toggeleExpantion();
-          },
-          child: Text(isExpanded == true ? "Less" : "More",
-              style:
-                  AppStyles.textStyle.copyWith(color: AppStyles.primaryColor)),
-        )
-      ],
-    );
+    return Obx((){
+
+      var textWidget = Text(
+        text,
+        maxLines: controller.isExpanded.value == true ? null : 9,
+        overflow:
+        controller.isExpanded.value == true ? TextOverflow.visible : TextOverflow.ellipsis,
+      );
+
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          textWidget,
+          GestureDetector(
+            onTap: () {
+              controller.toggeleExpantion();
+            },
+            child: Text(controller.isExpanded.value == true ? "Less" : "More",
+                style:
+                AppStyles.textStyle.copyWith(color: AppStyles.primaryColor)),
+          )
+        ],
+      );
+    });
   }
 }
