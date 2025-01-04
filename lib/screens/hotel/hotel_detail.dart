@@ -140,13 +140,13 @@ class ExpandedTextWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context,WidgetRef ref) {
 
-    var isExpanded = ref.watch(textExpanstionNotifierProvider);
+    var isExpandedProvider = ref.watch(textExpanstionNotifierProvider);
 
     var textWidget = Text(
       text,
-      maxLines: isExpanded == true ? null : 9,
+      maxLines: isExpandedProvider == true ? null : 9,
       overflow:
-      isExpanded == true ? TextOverflow.visible : TextOverflow.ellipsis,
+      isExpandedProvider == true ? TextOverflow.visible : TextOverflow.ellipsis,
     );
 
     return Column(
@@ -155,9 +155,9 @@ class ExpandedTextWidget extends ConsumerWidget {
         textWidget,
         GestureDetector(
           onTap: () {
-            ref.watch(textExpanstionNotifierProvider.notifier).toggeleExpantion(isExpanded);
+            ref.watch(textExpanstionNotifierProvider.notifier).toggeleExpantion(isExpandedProvider);
           },
-          child: Text(isExpanded == true ? "Less" : "More",
+          child: Text(isExpandedProvider == true ? "Less" : "More",
               style:
               AppStyles.textStyle.copyWith(color: AppStyles.primaryColor)),
         )
