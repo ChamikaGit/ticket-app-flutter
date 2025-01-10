@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ticket_app/bloc/bottom_nav/bottom_nav_bloc.dart';
+import 'package:ticket_app/bloc/bottom_nav/cubit/bottom_nav_cubit.dart';
 import 'package:ticket_app/bloc/text_expantion/text_expanstion_bloc.dart';
 import 'package:ticket_app/routes/app_routes.dart';
 import 'package:ticket_app/screens/home/view_all_hotels.dart';
@@ -10,9 +11,11 @@ import 'package:ticket_app/screens/hotel/hotel_detail.dart';
 import 'package:ticket_app/screens/ticket/ticket_screen.dart';
 
 import 'base/bottom_nav_bar.dart';
+import 'bloc/text_expantion/cubit/text_expansion_cubit.dart';
 
 void main() {
-  runApp(ProviderScope(child: const MyAppTest()));
+  // runApp(ProviderScope(child: const MyAppTest()));
+  runApp(MyAppTest());
   var test = TestClass(x: 3, y: 4);
   print(test.y);
 
@@ -45,8 +48,10 @@ class MyAppTest extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<BottomNavBloc>(create: (BuildContext context)=>BottomNavBloc()),
-        BlocProvider<TextExpansionBloc>(create: (BuildContext context)=>TextExpansionBloc()),
+        // BlocProvider<BottomNavBloc>(create: (BuildContext context)=>BottomNavBloc()),
+        // BlocProvider<TextExpansionBloc>(create: (BuildContext context)=>TextExpansionBloc()),
+        BlocProvider<BottomNavCubit>(create: (BuildContext context)=>BottomNavCubit()),
+        BlocProvider<TextExpansionCubit>(create: (BuildContext context)=>TextExpansionCubit()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ticket_app/base/res/styles/app_styles.dart';
-import 'package:ticket_app/bloc/text_expantion/text_expanstion_bloc.dart';
+import 'package:ticket_app/bloc/text_expantion/cubit/text_expansion_cubit.dart';
 import 'package:ticket_app/controller/text_expantion_controller.dart';
 import '../../base/utils/app_json.dart';
 import 'package:get/get.dart';
@@ -178,10 +178,11 @@ class ExpandedTextWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TextExpansionBloc,TextExpansionState>(builder: (context,state){
+    // return BlocBuilder<TextExpansionBloc,TextExpansionState>(builder: (context,state){
+    return BlocBuilder<TextExpansionCubit,TextExpansionCubitState>(builder: (context,state){
 
       if(state is IsExpandedState){
-        var isExpanded =  state.isSelected;
+        var isExpanded =  state.isExpanded;
 
         print("My expanded value is value : $isExpanded");
 
@@ -198,7 +199,8 @@ class ExpandedTextWidget extends StatelessWidget {
             textWidget,
             GestureDetector(
               onTap: () {
-                context.read<TextExpansionBloc>().add(IsExpandedEvent(isExpanded));
+                // context.read<TextExpansionBloc>().add(IsExpandedEvent(isExpanded));
+                context.read<TextExpansionCubit>().isExpandedEvent(isExpanded);
               },
               child: Text(isExpanded == true ? "Less" : "More",
                   style:

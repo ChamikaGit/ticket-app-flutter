@@ -1,9 +1,8 @@
 import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:get/get.dart';
 import 'package:ticket_app/bloc/bottom_nav/bottom_nav_bloc.dart';
+import 'package:ticket_app/bloc/bottom_nav/cubit/bottom_nav_cubit.dart';
 import 'package:ticket_app/screens/home/home_screen.dart';
 import 'package:ticket_app/screens/search/search_screen.dart';
 import 'package:ticket_app/screens/ticket/ticket_screen.dart';
@@ -30,12 +29,13 @@ class BottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext contex) {
 
-    return BlocBuilder<BottomNavBloc,BottomNavState>(builder: (contex,state){
+    // return BlocBuilder<BottomNavBloc,BottomNavState>(builder: (contex,state){
+    return BlocBuilder<BottomNavCubit,BottomNavCubitState>(builder: (contex,state){
 
       print("My state is : ${state}");
 
 
-      if(state is BottomNavBarSelected){
+      if(state is BottomNavBarCubitSelected){
         return Scaffold(
         // appBar: AppBar(
         //   title: const Center(child: Text("My tickets")),
@@ -44,7 +44,8 @@ class BottomNavBar extends StatelessWidget {
         bottomNavigationBar: BottomNavigationBar(
             currentIndex:state.selectedIndex,
             onTap: (int index){
-              contex.read<BottomNavBloc>().add(OnItemTapped(index));
+              // contex.read<BottomNavBloc>().add(OnItemTapped(index));
+              contex.read<BottomNavCubit>().onItemTapped(index);
             },
             selectedItemColor: Colors.blueGrey,
             unselectedItemColor: const Color(0xFF526400),
