@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:get/get.dart';
-import 'package:ticket_app/base/bottom_nav_bar.dart';
+import 'package:ticket_app/bloc/bottom_nav/bottom_nav_bloc.dart';
+import 'package:ticket_app/bloc/text_expantion/text_expanstion_bloc.dart';
 import 'package:ticket_app/routes/app_routes.dart';
 import 'package:ticket_app/screens/home/view_all_hotels.dart';
 import 'package:ticket_app/screens/home/view_all_tickets.dart';
 import 'package:ticket_app/screens/hotel/hotel_detail.dart';
 import 'package:ticket_app/screens/ticket/ticket_screen.dart';
 
+import 'base/bottom_nav_bar.dart';
+
 void main() {
-  runApp(
-      ProviderScope(child : const MyAppTest())
-  );
+  runApp(ProviderScope(child: const MyAppTest()));
   var test = TestClass(x: 3, y: 4);
   print(test.y);
 
@@ -42,21 +43,27 @@ class MyAppTest extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      // home: const BottomNavBar(),
-      routes: {
-        AppRoutes.home:(context){ // here "/" means home so if we use "/" don't need to mentioned the home in material app
-          return  BottomNavBar();
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<BottomNavBloc>(create: (BuildContext context)=>BottomNavBloc()),
+        BlocProvider<TextExpansionBloc>(create: (BuildContext context)=>TextExpansionBloc()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        // home: const BottomNavBar(),
+        routes: {
+          AppRoutes.home:(context){ // here "/" means home so if we use "/" don't need to mentioned the home in material app
+            return  BottomNavBar();
+          },
+          AppRoutes.allTickets: (context) {
+            //we can precache the data here before load the screen
+            return const ViewAllTickets();
+          },
+          AppRoutes.ticketScreen :(context) => const TicketScreen(),
+          AppRoutes.allHotels :(context) => const AllHotelsScreen(),
+          AppRoutes.hotelDetail :(context) => const HotelDetail(),
         },
-        AppRoutes.allTickets: (context) {
-          //we can precache the data here before load the screen
-          return const ViewAllTickets();
-        },
-        AppRoutes.ticketScreen :(context) => const TicketScreen(),
-        AppRoutes.allHotels :(context) => const AllHotelsScreen(),
-        AppRoutes.hotelDetail :(context) => const HotelDetail(),
-      },
+      ),
     );
   }
 }
